@@ -3,35 +3,315 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Variedad de Flores</title>
+
+  <title>Microservicio de Flores | Jimmy Fernando Lisintuña</title>
+
   <style>
-    body{font-family:Arial,sans-serif;max-width:900px;margin:40px auto;padding:0 20px;background:#f6f7f9;color:#222}
-    h1{margin-bottom:8px}.card{background:#fff;padding:24px;border-radius:12px;box-shadow:0 2px 12px #0001;margin:20px 0}
-    form{display:grid;gap:12px;grid-template-columns:1fr 1fr 1fr auto}input,button{padding:10px;border:1px solid #ccc;border-radius:7px}button{cursor:pointer}
-    table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:10px;border-bottom:1px solid #eee}
-    @media(max-width:700px){form{grid-template-columns:1fr}}
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+      background: #f6f7f9;
+      color: #222;
+    }
+
+    header {
+      background: #fff;
+      padding: 28px;
+      border-radius: 14px;
+      box-shadow: 0 2px 12px #0001;
+      margin-bottom: 20px;
+      border-left: 5px solid #6c5ce7;
+    }
+
+    header h1 {
+      margin: 0 0 8px;
+      font-size: 30px;
+    }
+
+    header p {
+      margin: 5px 0;
+      color: #555;
+    }
+
+    .developer {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #6c5ce7;
+      font-weight: bold;
+    }
+
+    .technologies {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 15px;
+    }
+
+    .technology {
+      background: #f0eefc;
+      color: #5146a5;
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-size: 13px;
+    }
+
+    .card {
+      background: #fff;
+      padding: 24px;
+      border-radius: 14px;
+      box-shadow: 0 2px 12px #0001;
+      margin: 20px 0;
+    }
+
+    .card h2 {
+      margin-top: 0;
+    }
+
+    form {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: 1fr 1fr 1fr auto;
+    }
+
+    input,
+    button {
+      padding: 11px;
+      border: 1px solid #ccc;
+      border-radius: 7px;
+      font-size: 14px;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #6c5ce7;
+    }
+
+    button {
+      cursor: pointer;
+      background: #6c5ce7;
+      color: white;
+      border: none;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #5848d3;
+    }
+
+    #message {
+      margin-bottom: 0;
+      font-weight: bold;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      text-align: left;
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f8f8fb;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px 0;
+      color: #666;
+      font-size: 13px;
+    }
+
+    footer strong {
+      color: #6c5ce7;
+    }
+
+    @media(max-width: 700px) {
+      form {
+        grid-template-columns: 1fr;
+      }
+
+      table {
+        font-size: 13px;
+      }
+
+      header h1 {
+        font-size: 24px;
+      }
+    }
   </style>
 </head>
+
 <body>
-  <h1>Variedad de Flores</h1>
-  <p>Microservicio PHP + SQLite + proveedor externo.</p>
+
+  <header>
+    <h1>🌸 Microservicio de Variedad de Flores</h1>
+
+    <p>
+      Aplicación web desarrollada como demostración de desarrollo backend,
+      consumo de servicios externos y persistencia de información.
+    </p>
+
+    <div class="developer">
+      Desarrollado por Jimmy Fernando Lisintuña | Junior Developer
+    </div>
+
+    <div class="technologies">
+      <span class="technology">PHP 8.3</span>
+      <span class="technology">REST API</span>
+      <span class="technology">SQLite</span>
+      <span class="technology">Docker</span>
+      <span class="technology">Docker Compose</span>
+      <span class="technology">JavaScript</span>
+    </div>
+  </header>
+
   <section class="card">
+
     <h2>Registrar flor</h2>
+
     <form id="form">
-      <input name="nombre" placeholder="Nombre" required>
-      <input name="color" placeholder="Color" required>
-      <input name="precio_tallo" type="number" min="0" step="0.01" placeholder="Precio/tallo" required>
-      <button type="submit">Guardar</button>
+
+      <input
+        name="nombre"
+        placeholder="Nombre de la flor"
+        required
+      >
+
+      <input
+        name="color"
+        placeholder="Color"
+        required
+      >
+
+      <input
+        name="precio_tallo"
+        type="number"
+        min="0"
+        step="0.01"
+        placeholder="Precio por tallo"
+        required
+      >
+
+      <button type="submit">
+        Guardar
+      </button>
+
     </form>
+
     <p id="message"></p>
+
   </section>
+
   <section class="card">
+
     <h2>Flores registradas</h2>
-    <table><thead><tr><th>ID</th><th>Nombre</th><th>Color</th><th>Precio/tallo</th><th>Descripción agronómica</th></tr></thead><tbody id="rows"></tbody></table>
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Color</th>
+          <th>Precio/tallo</th>
+          <th>Descripción agronómica</th>
+        </tr>
+      </thead>
+
+      <tbody id="rows"></tbody>
+
+    </table>
+
   </section>
+
+  <footer>
+    Microservicio REST desarrollado con PHP, SQLite y Docker.
+    <br>
+    <strong>Jimmy Fernando Lisintuña | Junior Developer</strong>
+  </footer>
+
 <script>
-const form=document.querySelector('#form'), rows=document.querySelector('#rows'), msg=document.querySelector('#message');
-async function load(){const r=await fetch('/flores');const j=await r.json();if(!r.ok) throw new Error(j.error||'Error');rows.innerHTML=j.data.map(f=>`<tr><td>${f.id}</td><td>${f.nombre}</td><td>${f.color}</td><td>${Number(f.precio_tallo).toFixed(2)}</td><td>${f.descripcion_agronomica}</td></tr>`).join('')}
-form.addEventListener('submit',async e=>{e.preventDefault();const data=Object.fromEntries(new FormData(form));data.precio_tallo=Number(data.precio_tallo);const r=await fetch('/flores',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});const j=await r.json();msg.textContent=j.message||j.error;if(r.ok){form.reset();load()}});load().catch(e=>msg.textContent=e.message);
+
+const form = document.querySelector('#form');
+const rows = document.querySelector('#rows');
+const msg = document.querySelector('#message');
+
+async function load() {
+
+  const response = await fetch('/flores');
+  const json = await response.json();
+
+  if (!response.ok) {
+    throw new Error(json.error || 'Error al consultar las flores');
+  }
+
+  rows.innerHTML = json.data.map(flor => `
+    <tr>
+      <td>${flor.id}</td>
+      <td>${flor.nombre}</td>
+      <td>${flor.color}</td>
+      <td>$${Number(flor.precio_tallo).toFixed(2)}</td>
+      <td>${flor.descripcion_agronomica}</td>
+    </tr>
+  `).join('');
+}
+
+form.addEventListener('submit', async event => {
+
+  event.preventDefault();
+
+  msg.textContent = 'Guardando...';
+
+  const data = Object.fromEntries(
+    new FormData(form)
+  );
+
+  data.precio_tallo = Number(data.precio_tallo);
+
+  try {
+
+    const response = await fetch('/flores', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+
+    const json = await response.json();
+
+    msg.textContent = json.message || json.error;
+
+    if (response.ok) {
+      form.reset();
+      await load();
+    }
+
+  } catch (error) {
+
+    msg.textContent = 'Error de conexión con el servidor';
+
+  }
+
+});
+
+load().catch(error => {
+  msg.textContent = error.message;
+});
+
 </script>
-</body></html>
+
+</body>
+</html>
