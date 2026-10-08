@@ -1,0 +1,9 @@
+services:
+  app:
+    build: .
+    container_name: flor-microservice
+    ports:
+      - "8080:80"
+    volumes:
+      - ./tessa.db:/var/www/html/tessa.db
+    restart: unless-stopped

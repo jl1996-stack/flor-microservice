@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Variedad de Flores</title>
+  <style>
+    body{font-family:Arial,sans-serif;max-width:900px;margin:40px auto;padding:0 20px;background:#f6f7f9;color:#222}
+    h1{margin-bottom:8px}.card{background:#fff;padding:24px;border-radius:12px;box-shadow:0 2px 12px #0001;margin:20px 0}
+    form{display:grid;gap:12px;grid-template-columns:1fr 1fr 1fr auto}input,button{padding:10px;border:1px solid #ccc;border-radius:7px}button{cursor:pointer}
+    table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:10px;border-bottom:1px solid #eee}
+    @media(max-width:700px){form{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <h1>Variedad de Flores</h1>
+  <p>Microservicio PHP + SQLite + proveedor externo.</p>
+  <section class="card">
+    <h2>Registrar flor</h2>
+    <form id="form">
+      <input name="nombre" placeholder="Nombre" required>
+      <input name="color" placeholder="Color" required>
+      <input name="precio_tallo" type="number" min="0" step="0.01" placeholder="Precio/tallo" required>
+      <button type="submit">Guardar</button>
+    </form>
+    <p id="message"></p>
+  </section>
+  <section class="card">
+    <h2>Flores registradas</h2>
+    <table><thead><tr><th>ID</th><th>Nombre</th><th>Color</th><th>Precio/tallo</th><th>Descripción agronómica</th></tr></thead><tbody id="rows"></tbody></table>
+  </section>
+<script>
+const form=document.querySelector('#form'), rows=document.querySelector('#rows'), msg=document.querySelector('#message');
+async function load(){const r=await fetch('/flores');const j=await r.json();if(!r.ok) throw new Error(j.error||'Error');rows.innerHTML=j.data.map(f=>`<tr><td>${f.id}</td><td>${f.nombre}</td><td>${f.color}</td><td>${Number(f.precio_tallo).toFixed(2)}</td><td>${f.descripcion_agronomica}</td></tr>`).join('')}
+form.addEventListener('submit',async e=>{e.preventDefault();const data=Object.fromEntries(new FormData(form));data.precio_tallo=Number(data.precio_tallo);const r=await fetch('/flores',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});const j=await r.json();msg.textContent=j.message||j.error;if(r.ok){form.reset();load()}});load().catch(e=>msg.textContent=e.message);
+</script>
+</body></html>
